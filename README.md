@@ -82,7 +82,7 @@ The full project proposal — covering all services, testing scopes, objectives,
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/playwright-capstone.git
+git clone https://github.com/abhisdas/playwright-capstone.git
 cd playwright-capstone
 
 # 2. Install dependencies
