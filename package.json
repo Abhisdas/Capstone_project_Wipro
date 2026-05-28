@@ -1,0 +1,31 @@
+{
+  "name": "playwright-capstone-project",
+  "version": "1.0.0",
+  "description": "Enterprise E-Commerce Automation Testing Framework using Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report:html": "playwright show-report",
+    "report:allure": "allure serve allure-results"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "automation",
+    "sdet",
+    "capstone"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "allure-playwright": "^3.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
