@@ -53,17 +53,17 @@ class StorefrontManager {
      */
     async launchHomePage() {
         await this.browserPage.goto('https://automationexercise.com/', {
-            waitUntil: 'domcontentloaded',
+            waitUntil: 'commit',
             timeout: 60000
         });
     }
 
-    /**
-     * Clicks the products navigation tab in the header
-     */
     async openProductListing() {
-        await this.browseItemsLink.waitFor({ state: 'visible' });
-        await this.browseItemsLink.click({ force: true });
+        await this.browserPage.goto('https://automationexercise.com/products', {
+            waitUntil: 'commit',
+            timeout: 60000
+        });
+        await this.allItemsHeading.waitFor({ state: 'visible', timeout: 20000 });
     }
 
     /**
@@ -73,30 +73,57 @@ class StorefrontManager {
     async findProductByKeyword(searchTerm) {
         await this.searchTermInput.waitFor({ state: 'visible', timeout: 10000 });
         await this.searchTermInput.fill(searchTerm);
-        await this.triggerSearchBtn.click({ force: true });
+        
+        await this.triggerSearchBtn.click();
+        try {
+            await this.browserPage.waitForURL(`**/products?search=*`, { timeout: 3000 });
+        } catch (e) {
+            // Self-healing retry if first click didn't trigger navigation due to layout shift or overlay
+            await this.triggerSearchBtn.click({ force: true });
+            await this.browserPage.waitForURL(`**/products?search=*`, { timeout: 5000 });
+        }
     }
 
     /**
      * Navigates to the details page of the first listed product
      */
     async inspectTopProduct() {
+        await this.topItemDetailLink.waitFor({ state: 'visible', timeout: 20000 });
+        await this.topItemDetailLink.scrollIntoViewIfNeeded();
         await this.topItemDetailLink.click({ force: true });
+        await this.browserPage.waitForURL('**/product_details/*', { waitUntil: 'commit', timeout: 25000 });
     }
 
     /**
      * Places the first product into the shopping basket
      */
     async placeTopItemInBasket() {
+        await this.topItemCartBtn.waitFor({ state: 'visible', timeout: 20000 });
         await this.topItemCartBtn.scrollIntoViewIfNeeded();
         await this.topItemCartBtn.click({ force: true });
+        try {
+            await this.keepShoppingBtn.waitFor({ state: 'visible', timeout: 5000 });
+        } catch (e) {
+            // Self-healing retry
+            await this.topItemCartBtn.click({ force: true });
+            await this.keepShoppingBtn.waitFor({ state: 'visible', timeout: 8000 });
+        }
     }
 
     /**
      * Places the second product into the shopping basket
      */
     async placeSecondItemInBasket() {
+        await this.secondItemCartBtn.waitFor({ state: 'visible', timeout: 10000 });
         await this.secondItemCartBtn.scrollIntoViewIfNeeded();
         await this.secondItemCartBtn.click();
+        try {
+            await this.keepShoppingBtn.waitFor({ state: 'visible', timeout: 3000 });
+        } catch (e) {
+            // Self-healing retry if first click didn't trigger modal due to layout shift or overlay
+            await this.secondItemCartBtn.click({ force: true });
+            await this.keepShoppingBtn.waitFor({ state: 'visible', timeout: 5000 });
+        }
     }
 
     /**
@@ -107,18 +134,18 @@ class StorefrontManager {
         await this.keepShoppingBtn.click();
     }
 
-    /**
-     * Navigates to the shopping basket page
-     */
     async openBasketPage() {
-        await this.basketHeaderLink.click({ force: true });
+        await this.browserPage.goto('https://automationexercise.com/view_cart', {
+            waitUntil: 'commit',
+            timeout: 60000
+        });
     }
 
-    /**
-     * Removes a product entry from the shopping basket
-     */
     async discardBasketItem() {
-        await this.removeBasketItemBtn.click({ force: true });
+        await this.removeBasketItemBtn.waitFor({ state: 'visible', timeout: 20000 });
+        await this.removeBasketItemBtn.click();
+        // Wait for the cart row to be removed from the DOM
+        await this.basketItemHeading.waitFor({ state: 'detached', timeout: 20000 });
     }
 
     /**

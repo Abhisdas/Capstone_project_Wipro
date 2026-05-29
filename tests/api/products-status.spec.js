@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../../fixtures/base-fixture');
 const httpService = require('../../api/api-client');
 
 test('Confirm Products API Returns Expected HTTP Code', async () => {

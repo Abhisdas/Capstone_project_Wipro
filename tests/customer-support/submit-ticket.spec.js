@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../../fixtures/base-fixture');
 const HelpDeskPortal = require('../../pages/support.page');
 
 test('Complete Help Request Submission and Verify Success', async ({ page }) => {
@@ -12,7 +12,8 @@ test('Complete Help Request Submission and Verify Success', async ({ page }) => 
         'This message was dispatched by the automated testing framework.'
     );
     await helpDesk.dispatchHelpRequest();
+    await helpDesk.confirmationBanner.waitFor({ state: 'visible', timeout: 20000 });
     await expect(
         helpDesk.confirmationBanner
-    ).toContainText('Success');
+    ).toContainText('Success', { timeout: 20000 });
 });

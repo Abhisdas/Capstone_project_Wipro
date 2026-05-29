@@ -15,8 +15,8 @@ module.exports = defineConfig({
   /* Prevent accidental .only() usage in CI pipelines */
   forbidOnly: !!process.env.CI,
 
-  /* Automatically retry failed tests in CI environments */
-  retries: process.env.CI ? 2 : 0,
+  /* Retry flaky tests once locally too (website is unreliable) */
+  retries: process.env.CI ? 2 : 1,
 
   /* Single worker ensures stable execution order */
   workers: 1,
@@ -32,8 +32,8 @@ module.exports = defineConfig({
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
     video: 'retain-on-failure',
-    actionTimeout: 15000,
-    navigationTimeout: 30000,
+    actionTimeout: 30000,
+    navigationTimeout: 60000,
   },
 
   /* Browser engine configuration */

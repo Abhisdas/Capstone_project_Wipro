@@ -1,7 +1,7 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../../fixtures/base-fixture');
 
 test('Check Contact Us Link Visibility in Delivery context', async ({ page }) => {
-    await page.goto('https://automationexercise.com/view_cart');
+    await page.goto('https://automationexercise.com/view_cart', { waitUntil: 'commit' });
     await expect(
         page.getByRole('link', { name: 'Contact us' })
     ).toBeVisible();

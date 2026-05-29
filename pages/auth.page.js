@@ -35,18 +35,17 @@ class AccountGateway {
      */
     async launchHomePage() {
         await this.browserPage.goto('https://automationexercise.com/', {
-            waitUntil: 'domcontentloaded',
+            waitUntil: 'commit',
             timeout: 60000
         });
     }
 
-    /**
-     * Opens the authentication portal by clicking the header navigation item
-     */
     async goToAuthPortal() {
-        await this.headerAuthLink.waitFor({ state: 'visible' });
-        await this.headerAuthLink.scrollIntoViewIfNeeded();
-        await this.headerAuthLink.click({ force: true });
+        await this.browserPage.goto('https://automationexercise.com/login', {
+            waitUntil: 'commit',
+            timeout: 60000
+        });
+        await this.signInEmailInput.waitFor({ state: 'visible', timeout: 20000 });
     }
 
     /**

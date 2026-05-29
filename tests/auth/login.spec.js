@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../../fixtures/base-fixture');
 const AccountGateway = require('../../pages/auth.page');
 const loginData = require('../../data/login-data');
 

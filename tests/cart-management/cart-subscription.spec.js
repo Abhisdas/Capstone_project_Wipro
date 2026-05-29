@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../../fixtures/base-fixture');
 const StorefrontManager = require('../../pages/catalog.page');
 
 test('Verify Newsletter Subscription Area on Basket Page', async ({ page }) => {

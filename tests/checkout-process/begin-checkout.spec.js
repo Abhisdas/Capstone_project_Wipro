@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../../fixtures/base-fixture');
 const StorefrontManager = require('../../pages/catalog.page');
 
 test('Initiate Order Flow and Confirm Checkout Button Appears', async ({ page }) => {

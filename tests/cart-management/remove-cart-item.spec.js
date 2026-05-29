@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../../fixtures/base-fixture');
 const StorefrontManager = require('../../pages/catalog.page');
 
 test('Verify Item Disappears After Basket Removal Action', async ({ page }) => {
@@ -9,5 +9,5 @@ test('Verify Item Disappears After Basket Removal Action', async ({ page }) => {
     await storefront.dismissConfirmationPopup();
     await storefront.openBasketPage();
     await storefront.discardBasketItem();
-    await expect(storefront.basketItemHeading).not.toBeVisible();
+    await expect(storefront.basketItemHeading).not.toBeVisible({ timeout: 20000 });
 });

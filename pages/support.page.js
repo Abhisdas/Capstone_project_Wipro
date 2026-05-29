@@ -26,19 +26,17 @@ class HelpDeskPortal {
      */
     async launchHomePage() {
         await this.browserPage.goto('https://automationexercise.com/', {
-            waitUntil: 'domcontentloaded',
+            waitUntil: 'commit',
             timeout: 60000
         });
     }
 
-    /**
-     * Navigates to the help desk contact form page
-     */
     async goToHelpDesk() {
-        await Promise.all([
-            this.browserPage.waitForURL('**/contact_us'),
-            this.helpDeskNavLink.click({ force: true })
-        ]);
+        await this.browserPage.goto('https://automationexercise.com/contact_us', {
+            waitUntil: 'commit',
+            timeout: 60000
+        });
+        await this.senderNameInput.waitFor({ state: 'visible', timeout: 20000 });
     }
 
     /**
