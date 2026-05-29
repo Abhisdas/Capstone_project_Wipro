@@ -1,22 +1,31 @@
+/**
+ * Credential sets for parameterized sign-in verification.
+ * Each entry includes an email, password, and anticipated outcome.
+ */
 module.exports = [
     {
-        email: "alex.dev.testing@gmail.com",
-        password: "securePass123",
+        email: "abhis.capstone.tester@gmail.com",
+        password: "T3stAcc0unt!",
         expected: "success"
     },
     {
-        email: "bad.user.account@yahoo.com",
-        password: "wrongpassword11",
+        email: "random.fake.addr@hotmail.com",
+        password: "n0tR3alPwd",
         expected: "failure"
     },
     {
         email: "",
-        password: "anypassword5",
+        password: "blindEntry99",
         expected: "failure"
     },
     {
-        email: "user.auth@outlook.com",
+        email: "missing.pwd.field@outlook.com",
         password: "",
+        expected: "failure"
+    },
+    {
+        email: "spaces.only@test.org",
+        password: "   ",
         expected: "failure"
     }
 ];

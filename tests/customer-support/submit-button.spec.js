@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Check Submit Button Visibility on Support Form', async ({ page }) => {
+test('Confirm Submit Action Button Renders on Help Desk Page', async ({ page }) => {
     await page.goto('https://automationexercise.com/contact_us');
     await expect(
         page.locator('input[data-qa="submit-button"]')

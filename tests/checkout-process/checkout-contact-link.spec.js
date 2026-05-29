@@ -1,10 +1,10 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Contact Support Header Link inside Cart Page', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCart();
+test('Confirm Contact Support Nav Link Present on Basket Page', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openBasketPage();
     await expect(
         page.getByRole('link', { name: 'Contact us' })
     ).toBeVisible();

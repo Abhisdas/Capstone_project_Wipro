@@ -1,21 +1,21 @@
 const { test, expect } = require('@playwright/test');
-const AuthPage = require('../../pages/auth.page');
+const AccountGateway = require('../../pages/auth.page');
 const loginData = require('../../data/login-data');
 
-loginData.forEach((data) => {
-    test(`Login Validation for User: ${data.email || 'Empty Email'}`, async ({ page }) => {
-        const authPage = new AuthPage(page);
-        await authPage.openApp();
-        await authPage.navigateToAuth();
-        await authPage.performLogin(data.email, data.password);
+loginData.forEach((entry) => {
+    test(`Sign-In Workflow for Account: ${entry.email || 'Blank Email'}`, async ({ page }) => {
+        const gateway = new AccountGateway(page);
+        await gateway.launchHomePage();
+        await gateway.goToAuthPortal();
+        await gateway.executeSignIn(entry.email, entry.password);
 
-        if (data.expected === "success") {
+        if (entry.expected === "success") {
             await expect(page).toHaveURL(/automationexercise/);
         } else {
-            if (data.email === "" || data.password === "") {
-                await expect(authPage.loginButton).toBeVisible();
+            if (entry.email === "" || entry.password === "") {
+                await expect(gateway.signInSubmitBtn).toBeVisible();
             } else {
-                await expect(authPage.loginErrorAlert).toBeVisible();
+                await expect(gateway.credentialMismatchAlert).toBeVisible();
             }
         }
     });

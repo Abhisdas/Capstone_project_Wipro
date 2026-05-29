@@ -1,8 +1,8 @@
 const { test, expect } = require('@playwright/test');
 
-test('Check Home Page Link Presence in Support Header Menu', async ({ page }) => {
+test('Confirm Home Navigation Link on Help Desk Page', async ({ page }) => {
     await page.goto('https://automationexercise.com/contact_us');
     await expect(
-        page.getByRole('link', { name: 'Home' })
+        page.getByRole('link', { name: 'Home' }).first()
     ).toBeVisible();
 });

@@ -1,10 +1,10 @@
 const { test } = require('@playwright/test');
-const AuthPage = require('../../pages/auth.page');
+const AccountGateway = require('../../pages/auth.page');
 
-test('Setup User Authentication Session State', async ({ page }) => {
-    const authPage = new AuthPage(page);
-    await authPage.openApp();
-    await authPage.navigateToAuth();
-    await authPage.performLogin('alex.dev.testing@gmail.com', 'securePass123');
+test('Persist Authenticated Browser Session to Disk', async ({ page }) => {
+    const gateway = new AccountGateway(page);
+    await gateway.launchHomePage();
+    await gateway.goToAuthPortal();
+    await gateway.executeSignIn('abhis.capstone.tester@gmail.com', 'T3stAcc0unt!');
     await page.context().storageState({ path: 'playwright/.auth/user.json' });
 });

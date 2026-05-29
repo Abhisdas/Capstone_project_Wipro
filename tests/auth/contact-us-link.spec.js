@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Check Contact Us Link Visibility on Auth Page', async ({ page }) => {
+test('Ensure Contact Us Hyperlink Appears on Auth Screen', async ({ page }) => {
     await page.goto('https://automationexercise.com/login');
     await expect(
         page.getByRole('link', { name: 'Contact us' })

@@ -1,9 +1,9 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Header Block Visibility inside Cart Section', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCart();
+test('Confirm Page Header Renders on Basket View', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openBasketPage();
     await expect(page.locator('#header')).toBeVisible();
 });

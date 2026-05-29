@@ -1,11 +1,18 @@
+/**
+ * Search terms used for product catalog query validation.
+ * Each item represents a keyword to feed into the storefront search bar.
+ */
 module.exports = [
     {
-        product: "Dress"
+        product: "Top"
     },
     {
-        product: "Shirt"
+        product: "Jeans"
     },
     {
-        product: "Tshirt"
+        product: "Saree"
+    },
+    {
+        product: "Polo"
     }
 ];

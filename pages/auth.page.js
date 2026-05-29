@@ -1,73 +1,79 @@
 /**
- * Page Object Model representing the Authentication & Registration flows
+ * AccountGateway - Handles user authentication workflows
+ * including sign-in, sign-up, and session termination.
+ *
+ * This page object encapsulates all interactions with
+ * the authentication and registration interface.
  */
-class AuthPage {
+class AccountGateway {
+
     /**
-     * @param {import('@playwright/test').Page} page
+     * Initializes locator references for the account gateway page
+     * @param {import('@playwright/test').Page} browserPage - Active Playwright page context
      */
-    constructor(page) {
-        this.page = page;
+    constructor(browserPage) {
+        this.browserPage = browserPage;
 
-        // Registration Locators
-        this.regNameField = page.locator('input[data-qa="signup-name"]');
-        this.regEmailField = page.locator('input[data-qa="signup-email"]');
-        this.registerButton = page.getByRole('button', { name: 'Signup' });
+        // -- Sign-Up Form Elements --
+        this.nameInputForSignup = browserPage.locator('input[data-qa="signup-name"]');
+        this.emailInputForSignup = browserPage.locator('input[data-qa="signup-email"]');
+        this.signupSubmitBtn = browserPage.getByRole('button', { name: 'Signup' });
 
-        // Login Locators
-        this.authPageLink = page.getByRole('link', { name: 'Signup / Login' });
-        this.loginEmailField = page.locator('input[data-qa="login-email"]');
-        this.loginPasswordField = page.locator('input[data-qa="login-password"]');
-        this.loginButton = page.getByRole('button', { name: 'Login' });
-        this.logoutButton = page.getByRole('link', { name: 'Logout' });
+        // -- Sign-In Form Elements --
+        this.headerAuthLink = browserPage.getByRole('link', { name: 'Signup / Login' });
+        this.signInEmailInput = browserPage.locator('input[data-qa="login-email"]');
+        this.signInPasswordInput = browserPage.locator('input[data-qa="login-password"]');
+        this.signInSubmitBtn = browserPage.getByRole('button', { name: 'Login' });
+        this.sessionEndLink = browserPage.getByRole('link', { name: 'Logout' });
 
-        // Feedback Locators
-        this.loginErrorAlert = page.locator('text=Your email or password is incorrect!');
+        // -- Error and Status Indicators --
+        this.credentialMismatchAlert = browserPage.locator('text=Your email or password is incorrect!');
     }
 
     /**
-     * Navigate to the home page of the application under test
+     * Loads the base application URL in the active browser tab
      */
-    async openApp() {
-        await this.page.goto('https://automationexercise.com/', {
+    async launchHomePage() {
+        await this.browserPage.goto('https://automationexercise.com/', {
             waitUntil: 'domcontentloaded',
             timeout: 60000
         });
     }
 
     /**
-     * Click the login/registration navigation link in the header
+     * Opens the authentication portal by clicking the header navigation item
      */
-    async navigateToAuth() {
-        await this.authPageLink.waitFor({ state: 'visible' });
-        await this.authPageLink.scrollIntoViewIfNeeded();
-        await this.authPageLink.click({ force: true });
+    async goToAuthPortal() {
+        await this.headerAuthLink.waitFor({ state: 'visible' });
+        await this.headerAuthLink.scrollIntoViewIfNeeded();
+        await this.headerAuthLink.click({ force: true });
     }
 
     /**
-     * Perform login action
-     * @param {string} email
-     * @param {string} password
+     * Fills in the sign-in form and submits it
+     * @param {string} userEmail - Email credential for sign-in
+     * @param {string} userPassword - Password credential for sign-in
      */
-    async performLogin(email, password) {
-        await this.loginEmailField.fill(email);
-        await this.loginPasswordField.fill(password);
-        await this.loginButton.waitFor({ state: 'visible' });
-        await this.loginButton.scrollIntoViewIfNeeded();
-        await this.loginButton.click({ force: true });
+    async executeSignIn(userEmail, userPassword) {
+        await this.signInEmailInput.fill(userEmail);
+        await this.signInPasswordInput.fill(userPassword);
+        await this.signInSubmitBtn.waitFor({ state: 'visible' });
+        await this.signInSubmitBtn.scrollIntoViewIfNeeded();
+        await this.signInSubmitBtn.click({ force: true });
     }
 
     /**
-     * Perform registration registration action
-     * @param {string} name
-     * @param {string} email
+     * Fills in the sign-up form and submits it
+     * @param {string} fullName - Display name for the new account
+     * @param {string} emailAddr - Email address for registration
      */
-    async performRegistration(name, email) {
-        await this.regNameField.fill(name);
-        await this.regEmailField.fill(email);
-        await this.registerButton.waitFor({ state: 'visible' });
-        await this.registerButton.scrollIntoViewIfNeeded();
-        await this.registerButton.click({ force: true });
+    async executeSignUp(fullName, emailAddr) {
+        await this.nameInputForSignup.fill(fullName);
+        await this.emailInputForSignup.fill(emailAddr);
+        await this.signupSubmitBtn.waitFor({ state: 'visible' });
+        await this.signupSubmitBtn.scrollIntoViewIfNeeded();
+        await this.signupSubmitBtn.click({ force: true });
     }
 }
 
-module.exports = AuthPage;
+module.exports = AccountGateway;

@@ -1,12 +1,12 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
 test('Check Modal Continue Shopping Action Visibility', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCatalog();
-    await catalogPage.addFirstProductToCart();
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openProductListing();
+    await storefront.placeTopItemInBasket();
     await expect(
-        catalogPage.modalContinueBtn
+        storefront.keepShoppingBtn
     ).toBeVisible();
 });

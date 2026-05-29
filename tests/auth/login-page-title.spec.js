@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Check Login Page Document Title', async ({ page }) => {
+test('Confirm Auth Page Document Title Matches Expected', async ({ page }) => {
     await page.goto('https://automationexercise.com/login');
     await expect(page).toHaveTitle(/Automation Exercise/);
 });

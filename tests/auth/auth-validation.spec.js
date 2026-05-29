@@ -4,7 +4,7 @@ test.use({
     storageState: 'playwright/.auth/user.json'
 });
 
-test('Validate Session State User Authentication', async ({ page }) => {
+test('Confirm Stored Session Keeps User Signed In', async ({ page }) => {
     await page.goto('https://automationexercise.com/');
     await expect(
         page.getByRole('link', { name: 'Logout' })

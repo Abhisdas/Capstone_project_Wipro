@@ -1,107 +1,111 @@
-# E-Commerce Test Automation Suite (Playwright & JS)
+# E-Commerce QA Automation Suite
 
-An enterprise-grade QA automation framework designed for end-to-end testing of e-commerce web applications and REST APIs. Built on top of Playwright and Node.js.
+A full-stack automated testing solution for validating e-commerce web applications and their REST API endpoints. Built with Playwright and Node.js, following the Page Object Model (POM) architecture.
 
----
-
-## Features & Integration
-
-- **Cross-Browser Verification**: Parallelized chromium engine testing.
-- **Robust Locators**: Resilient selector strategies utilizing native Playwright `getByRole`, `getByPlaceholder`, and `locator` models.
-- **Page Object Design (POM)**: Distinct encapsulation of pages (Auth, Catalog, Support) to achieve high code reuse and low maintenance overhead.
-- **Data-Driven Workflows**: Parameterized test executions utilizing externalized mock JSON/JS datasets.
-- **API Automation Testing**: Performance and status verification of REST endpoints via Axios client library.
-- **Traceability & Diagnostics**: Screenshots, screen recording, and full execution trace logs captured on failure.
-- **HTML and Allure Reports**: Structured, interactive report dashboards for visualization of test run histories.
+**Author:** Abhishek Das
 
 ---
 
-## Technical Stack
+## Core Capabilities
 
-- **Automation Engine**: Playwright Test Runner
-- **Coding Standards**: JavaScript (Node.js)
-- **HTTP/API Client**: Axios
-- **Reporting Systems**: Allure and built-in Playwright HTML
+- **Browser-Based Validation**: Automated chromium engine tests for UI verification
+- **Resilient Element Targeting**: Uses Playwright's `getByRole`, `getByPlaceholder`, and CSS locator strategies for stable test execution
+- **Page Object Architecture**: Modular page classes (`AccountGateway`, `StorefrontManager`, `HelpDeskPortal`) for maintainability
+- **Data-Driven Execution**: Externalized test datasets in JavaScript modules for parameterized runs
+- **API Layer Testing**: HTTP endpoint validation using Axios client library
+- **Failure Diagnostics**: Automatic screenshots, video recordings, and execution traces on test failures
+- **Dual Report Generation**: Both Playwright HTML and Allure interactive dashboards
 
 ---
 
-## Project Structure
+## Technology Used
+
+| Component         | Technology       |
+|--------------------|------------------|
+| Test Runner        | Playwright       |
+| Language           | JavaScript (Node.js) |
+| HTTP Client        | Axios            |
+| Reporting          | HTML + Allure    |
+| Version Control    | Git & GitHub     |
+
+---
+
+## Directory Layout
 
 ```text
 .
-├── api/                       # API clients and routing
+├── api/                       # HTTP client configuration
 │   └── api-client.js
-├── data/                      # Test data inputs for parameterized execution
+├── data/                      # Parameterized test input datasets
 │   ├── login-data.js
 │   ├── product-data.js
 │   └── signup-data.js
-├── fixtures/                  # Playwright test fixtures and hooks
+├── fixtures/                  # Playwright custom test fixtures
 │   └── base-fixture.js
-├── pages/                     # Page Object Models
-│   ├── auth.page.js
-│   ├── catalog.page.js
-│   └── support.page.js
-├── tests/                     # Specialized test suites
-│   ├── api/                   # REST API tests
-│   ├── auth/                  # User login, registration, and forms
-│   ├── cart-management/       # Items addition/removal & persistence
-│   ├── checkout-process/      # Shipping/Billing and checkout workflows
-│   ├── customer-support/      # Support forms and dialog validation
-│   ├── payment-validation/    # Checkout payments elements verification
-│   ├── product-catalog/       # Product details, search query check
-│   ├── shipping-delivery/     # Delivery options and navigation flow
-│   └── user-profile/          # User preferences and profile checks
-├── playwright.config.js       # Playwright runner options
-├── package.json               # Node script targets & dependencies
-└── README.md                  # Project documentation
+├── pages/                     # Page Object Model classes
+│   ├── auth.page.js           # AccountGateway
+│   ├── catalog.page.js        # StorefrontManager
+│   └── support.page.js        # HelpDeskPortal
+├── tests/                     # Organized test suites
+│   ├── api/                   # REST API endpoint validation
+│   ├── auth/                  # Authentication & registration flows
+│   ├── cart-management/       # Shopping basket operations
+│   ├── checkout-process/      # Order initiation workflow
+│   ├── customer-support/      # Help desk form validation
+│   ├── payment-validation/    # Payment page element checks
+│   ├── product-catalog/       # Product browsing & search
+│   ├── shipping-delivery/     # Delivery page navigation
+│   └── user-profile/          # User account page checks
+├── playwright.config.js       # Test runner configuration
+├── package.json               # Dependencies & npm scripts
+└── README.md
 ```
 
 ---
 
-## Execution Guidelines
+## Getting Started
 
-### 1. Setup Dependencies
-To download all required library packages and configure Playwright browsers:
+### Prerequisites
+Ensure Node.js (v18+) is installed on your machine.
 
+### Install Dependencies
 ```bash
 npm install
 npx playwright install chromium
 ```
 
-### 2. Launch Tests
+### Run Tests
 
-- **Run complete suite:**
-  ```bash
-  npm test
-  ```
+Run the entire suite:
+```bash
+npm test
+```
 
-- **Run in browser UI mode:**
-  ```bash
-  npm run test:ui
-  ```
+Run with visual browser UI:
+```bash
+npm run test:ui
+```
 
-- **Run in headed browser mode:**
-  ```bash
-  npm run test:headed
-  ```
+Run with visible browser window:
+```bash
+npm run test:headed
+```
 
-- **Run specific directory suite (e.g. catalog):**
-  ```bash
-  npx playwright test tests/product-catalog/
-  ```
+Run a specific test module:
+```bash
+npx playwright test tests/auth/
+```
 
 ---
 
-## Reports Visualization
+## Viewing Reports
 
-### Standard HTML report
-To launch the default interactive browser report:
+**Interactive HTML Report:**
 ```bash
 npm run report:html
 ```
 
-### Allure dashboard
-To build and compile the premium Allure report dashboard:
+**Allure Dashboard:**
 ```bash
 npm run report:allure
 ```

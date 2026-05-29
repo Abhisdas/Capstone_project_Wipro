@@ -1,8 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Check Message Body Field Presence inside Support Page', async ({ page }) => {
+test('Confirm Message Textarea Renders on Help Desk Page', async ({ page }) => {
     await page.goto('https://automationexercise.com/contact_us');
-    await expect(
-        page.locator('#message')
-    ).toBeVisible();
+    await expect(page.locator('#message')).toBeVisible();
 });

@@ -1,9 +1,9 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Empty State Inside Cart Page initially', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCart();
-    await expect(catalogPage.cartItemTitle).toHaveCount(0);
+test('Verify Fresh Basket Has No Items Listed', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openBasketPage();
+    await expect(storefront.basketItemHeading).not.toBeVisible();
 });

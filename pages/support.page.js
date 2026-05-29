@@ -1,70 +1,73 @@
 /**
- * Page Object Model representing the Contact Us and Support Flow
+ * HelpDeskPortal - Manages the contact/support form interactions
+ * including form population, file attachment, and submission.
  */
-class SupportPage {
-    /**
-     * @param {import('@playwright/test').Page} page
-     */
-    constructor(page) {
-        this.page = page;
+class HelpDeskPortal {
 
-        this.supportMenuLink = page.getByRole('link', { name: 'Contact us' });
-        this.clientNameField = page.locator('input[data-qa="name"]');
-        this.clientEmailField = page.locator('input[data-qa="email"]');
-        this.messageSubjectField = page.locator('input[data-qa="subject"]');
-        this.messageBodyField = page.locator('#message');
-        this.fileAttachmentInput = page.locator('input[name="upload_file"]');
-        this.formSubmitButton = page.locator('input[data-qa="submit-button"]');
-        this.alertSuccessBanner = page.locator('.status.alert.alert-success').first();
+    /**
+     * Initializes locator references for the help desk portal
+     * @param {import('@playwright/test').Page} browserPage - Active Playwright page context
+     */
+    constructor(browserPage) {
+        this.browserPage = browserPage;
+
+        this.helpDeskNavLink = browserPage.getByRole('link', { name: 'Contact us' });
+        this.senderNameInput = browserPage.locator('input[data-qa="name"]');
+        this.senderEmailInput = browserPage.locator('input[data-qa="email"]');
+        this.topicInput = browserPage.locator('input[data-qa="subject"]');
+        this.detailsTextarea = browserPage.locator('#message');
+        this.attachmentPicker = browserPage.locator('input[name="upload_file"]');
+        this.sendRequestBtn = browserPage.locator('input[data-qa="submit-button"]');
+        this.confirmationBanner = browserPage.locator('.status.alert.alert-success').first();
     }
 
     /**
-     * Open base application URL
+     * Opens the main application landing page
      */
-    async openApp() {
-        await this.page.goto('https://automationexercise.com/', {
+    async launchHomePage() {
+        await this.browserPage.goto('https://automationexercise.com/', {
             waitUntil: 'domcontentloaded',
             timeout: 60000
         });
     }
 
     /**
-     * Navigate to the support/contact form page
+     * Navigates to the help desk contact form page
      */
-    async navigateToSupport() {
+    async goToHelpDesk() {
         await Promise.all([
-            this.page.waitForURL('**/contact_us'),
-            this.supportMenuLink.click({ force: true })
+            this.browserPage.waitForURL('**/contact_us'),
+            this.helpDeskNavLink.click({ force: true })
         ]);
     }
 
     /**
-     * Populate fields in the Contact form
-     * @param {string} name
-     * @param {string} email
-     * @param {string} subject
-     * @param {string} message
+     * Fills out every field of the help desk request form
+     * @param {string} senderName - Full name of the person submitting
+     * @param {string} senderEmail - Contact email address
+     * @param {string} topic - Brief subject line
+     * @param {string} details - Detailed message body
      */
-    async populateSupportForm(name, email, subject, message) {
-        await this.clientNameField.waitFor({ state: 'visible' });
-        await this.clientNameField.fill(name);
-        await this.clientEmailField.fill(email);
-        await this.messageSubjectField.fill(subject);
-        await this.messageBodyField.fill(message);
-        await this.fileAttachmentInput.setInputFiles('package.json');
+    async fillHelpRequest(senderName, senderEmail, topic, details) {
+        await this.senderNameInput.waitFor({ state: 'visible' });
+        await this.senderNameInput.fill(senderName);
+        await this.senderEmailInput.fill(senderEmail);
+        await this.topicInput.fill(topic);
+        await this.detailsTextarea.fill(details);
+        await this.attachmentPicker.setInputFiles('package.json');
     }
 
     /**
-     * Click form submit and automatically accept dialog
+     * Clicks the send button and handles the browser confirmation dialog
      */
-    async submitSupportForm() {
-        this.page.on('dialog', async dialog => {
+    async dispatchHelpRequest() {
+        this.browserPage.on('dialog', async dialog => {
             await dialog.accept();
         });
 
-        await this.formSubmitButton.scrollIntoViewIfNeeded();
-        await this.formSubmitButton.click({ force: true });
+        await this.sendRequestBtn.scrollIntoViewIfNeeded();
+        await this.sendRequestBtn.click({ force: true });
     }
 }
 
-module.exports = SupportPage;
+module.exports = HelpDeskPortal;

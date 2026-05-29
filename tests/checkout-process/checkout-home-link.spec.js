@@ -1,11 +1,11 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Home Page Link Presence in Cart Header Menu', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCart();
+test('Confirm Home Navigation Link Present on Basket Page', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openBasketPage();
     await expect(
-        page.getByRole('link', { name: 'Home' })
+        page.getByRole('link', { name: 'Home' }).first()
     ).toBeVisible();
 });

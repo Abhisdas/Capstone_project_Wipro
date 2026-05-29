@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Check Signup Header Visibility on Auth Page', async ({ page }) => {
+test('Ensure New User Registration Heading Renders', async ({ page }) => {
     await page.goto('https://automationexercise.com/login');
     await expect(
         page.getByText('New User Signup!')

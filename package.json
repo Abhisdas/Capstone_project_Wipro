@@ -1,7 +1,7 @@
 {
-  "name": "playwright-capstone-project",
+  "name": "ecommerce-qa-automation-suite",
   "version": "1.0.0",
-  "description": "Enterprise E-Commerce Automation Testing Framework using Playwright",
+  "description": "Comprehensive QA automation suite for e-commerce platform validation using Playwright",
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
@@ -15,10 +15,10 @@
     "playwright",
     "testing",
     "automation",
-    "sdet",
-    "capstone"
+    "qa",
+    "ecommerce"
   ],
-  "author": "",
+  "author": "Abhishek Das",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.40.0",

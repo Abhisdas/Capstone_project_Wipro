@@ -1,9 +1,9 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Document Title For Cart/Checkout Window', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCart();
+test('Confirm Basket Page Tab Title Matches Application Name', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openBasketPage();
     await expect(page).toHaveTitle(/Automation Exercise/);
 });

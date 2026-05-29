@@ -1,13 +1,13 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Cart Item Retained After Navigating Away', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCatalog();
-    await catalogPage.addFirstProductToCart();
-    await catalogPage.resumeShopping();
+test('Verify Basket Contents Survive Page Navigation', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openProductListing();
+    await storefront.placeTopItemInBasket();
+    await storefront.dismissConfirmationPopup();
     await page.goto('https://automationexercise.com/');
-    await catalogPage.navigateToCart();
-    await expect(catalogPage.cartItemTitle).toBeVisible();
+    await storefront.openBasketPage();
+    await expect(storefront.basketItemHeading).toBeVisible();
 });

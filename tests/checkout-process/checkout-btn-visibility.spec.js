@@ -1,11 +1,11 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Proceed to Checkout Button Presence inside Cart', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.addFirstProductToCart();
-    await catalogPage.resumeShopping();
-    await catalogPage.navigateToCart();
-    await expect(catalogPage.checkoutButton).toBeVisible();
+test('Confirm Checkout Action Button Renders After Adding Item', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.placeTopItemInBasket();
+    await storefront.dismissConfirmationPopup();
+    await storefront.openBasketPage();
+    await expect(storefront.initiateCheckoutBtn).toBeVisible();
 });

@@ -1,134 +1,140 @@
 /**
- * Page Object Model representing the Product Catalog & Shopping Cart flows
+ * StorefrontManager - Manages product browsing, searching,
+ * cart interactions, and checkout initiation.
+ *
+ * Encapsulates all storefront-related page interactions
+ * from product discovery through cart management.
  */
-class CatalogPage {
+class StorefrontManager {
+
     /**
-     * @param {import('@playwright/test').Page} page
+     * Sets up locator references for storefront elements
+     * @param {import('@playwright/test').Page} browserPage - Active Playwright page context
      */
-    constructor(page) {
-        this.page = page;
+    constructor(browserPage) {
+        this.browserPage = browserPage;
 
-        // Details and Meta Elements
-        this.priceDisplay = page.locator('.product-information span span');
-        this.availabilityStatus = page.locator('.product-information p').nth(0);
-        this.conditionStatus = page.locator('.product-information p').nth(1);
-        this.brandText = page.getByText('Brand:');
-        this.catalogHeading = page.getByText('All Products');
+        // -- Product Metadata Locators --
+        this.itemPriceLabel = browserPage.locator('.product-information span span');
+        this.itemStockStatus = browserPage.locator('.product-information p').nth(0);
+        this.itemConditionLabel = browserPage.locator('.product-information p').nth(1);
+        this.itemBrandLabel = browserPage.getByText('Brand:');
+        this.allItemsHeading = browserPage.getByText('All Products');
 
-        // Navigation and Action Elements
-        this.checkoutButton = page.getByText('Proceed To Checkout');
-        this.checkoutSection = page.locator('#cart_items');
-        this.authRedirectLink = page.getByRole('link', { name: 'Register / Login' });
+        // -- Checkout Flow Locators --
+        this.initiateCheckoutBtn = browserPage.getByText('Proceed To Checkout');
+        this.orderReviewSection = browserPage.locator('#cart_items');
+        this.redirectToAuthLink = browserPage.getByRole('link', { name: 'Register / Login' });
 
-        // Product Listings
-        this.catalogLink = page.getByRole('link', { name: 'Products' });
-        this.firstProductDetailsLink = page.locator('a[href*="/product_details/"]').first();
+        // -- Product Browsing Elements --
+        this.browseItemsLink = browserPage.getByRole('link', { name: 'Products' });
+        this.topItemDetailLink = browserPage.locator('a[href*="/product_details/"]').first();
 
-        // Search Section
-        this.searchField = page.locator('#search_product');
-        this.searchSubmitBtn = page.locator('#submit_search');
-        this.listedProductTitles = page.locator('.productinfo p');
+        // -- Search Interface --
+        this.searchTermInput = browserPage.locator('#search_product');
+        this.triggerSearchBtn = browserPage.locator('#submit_search');
+        this.visibleItemNames = browserPage.locator('.productinfo p');
 
-        // Detail Page
-        this.detailProductName = page.locator('.product-information h2');
+        // -- Product Detail Page --
+        this.itemDetailHeading = browserPage.locator('.product-information h2');
 
-        // Shopping Cart Elements
-        this.firstAddToCartBtn = page.locator('.features_items .product-image-wrapper').first().locator('.add-to-cart').first();
-        this.secondAddToCartBtn = page.locator('.features_items .product-image-wrapper').nth(1).locator('.add-to-cart').first();
-        this.modalContinueBtn = page.getByRole('button', { name: 'Continue Shopping' });
-        this.cartNavBtn = page.locator('a[href="/view_cart"]').first();
-        this.cartItemTitle = page.locator('.cart_description h4 a');
-        this.deleteCartItemBtn = page.locator('.cart_quantity_delete');
-        this.cartItemQuantity = page.locator('.cart_quantity');
+        // -- Shopping Basket Locators --
+        this.topItemCartBtn = browserPage.locator('.features_items .product-image-wrapper').first().locator('.add-to-cart').first();
+        this.secondItemCartBtn = browserPage.locator('.features_items .product-image-wrapper').nth(1).locator('.add-to-cart').first();
+        this.keepShoppingBtn = browserPage.getByRole('button', { name: 'Continue Shopping' });
+        this.basketHeaderLink = browserPage.locator('a[href="/view_cart"]').first();
+        this.basketItemHeading = browserPage.locator('.cart_description h4 a');
+        this.removeBasketItemBtn = browserPage.locator('.cart_quantity_delete');
+        this.basketItemCount = browserPage.locator('.cart_quantity');
     }
 
     /**
-     * Navigate to the home page of the application under test
+     * Opens the main application landing page
      */
-    async openApp() {
-        await this.page.goto('https://automationexercise.com/', {
+    async launchHomePage() {
+        await this.browserPage.goto('https://automationexercise.com/', {
             waitUntil: 'domcontentloaded',
             timeout: 60000
         });
     }
 
     /**
-     * Click the products navigation link in the header
+     * Clicks the products navigation tab in the header
      */
-    async navigateToCatalog() {
-        await this.catalogLink.waitFor({ state: 'visible' });
-        await this.catalogLink.click({ force: true });
+    async openProductListing() {
+        await this.browseItemsLink.waitFor({ state: 'visible' });
+        await this.browseItemsLink.click({ force: true });
     }
 
     /**
-     * Perform product search
-     * @param {string} productName
+     * Types a query into the search bar and triggers the search
+     * @param {string} searchTerm - Keyword for product search
      */
-    async searchCatalog(productName) {
-        await this.searchField.waitFor({ state: 'visible', timeout: 10000 });
-        await this.searchField.fill(productName);
-        await this.searchSubmitBtn.click({ force: true });
+    async findProductByKeyword(searchTerm) {
+        await this.searchTermInput.waitFor({ state: 'visible', timeout: 10000 });
+        await this.searchTermInput.fill(searchTerm);
+        await this.triggerSearchBtn.click({ force: true });
     }
 
     /**
-     * Open the details page of the first listed product
+     * Navigates to the details page of the first listed product
      */
-    async viewFirstProductDetails() {
-        await this.firstProductDetailsLink.click({ force: true });
+    async inspectTopProduct() {
+        await this.topItemDetailLink.click({ force: true });
     }
 
     /**
-     * Add the first listed product to the shopping cart
+     * Places the first product into the shopping basket
      */
-    async addFirstProductToCart() {
-        await this.firstAddToCartBtn.scrollIntoViewIfNeeded();
-        await this.firstAddToCartBtn.click({ force: true });
+    async placeTopItemInBasket() {
+        await this.topItemCartBtn.scrollIntoViewIfNeeded();
+        await this.topItemCartBtn.click({ force: true });
     }
 
     /**
-     * Add the second listed product to the shopping cart
+     * Places the second product into the shopping basket
      */
-    async addSecondProductToCart() {
-        await this.secondAddToCartBtn.scrollIntoViewIfNeeded();
-        await this.secondAddToCartBtn.click();
+    async placeSecondItemInBasket() {
+        await this.secondItemCartBtn.scrollIntoViewIfNeeded();
+        await this.secondItemCartBtn.click();
     }
 
     /**
-     * Dismiss the "Product Added" success modal
+     * Dismisses the product-added confirmation dialog
      */
-    async resumeShopping() {
-        await this.modalContinueBtn.waitFor({ state: 'visible', timeout: 10000 });
-        await this.modalContinueBtn.click();
+    async dismissConfirmationPopup() {
+        await this.keepShoppingBtn.waitFor({ state: 'visible', timeout: 10000 });
+        await this.keepShoppingBtn.click();
     }
 
     /**
-     * Navigate directly to the shopping cart page
+     * Navigates to the shopping basket page
      */
-    async navigateToCart() {
-        await this.cartNavBtn.click({ force: true });
+    async openBasketPage() {
+        await this.basketHeaderLink.click({ force: true });
     }
 
     /**
-     * Remove the item from the cart
+     * Removes a product entry from the shopping basket
      */
-    async removeProductFromCart() {
-        await this.deleteCartItemBtn.click({ force: true });
+    async discardBasketItem() {
+        await this.removeBasketItemBtn.click({ force: true });
     }
 
     /**
-     * Click the Proceed to Checkout button on the cart page
+     * Starts the checkout process from the cart page
      */
-    async proceedToCheckout() {
-        await this.checkoutButton.waitFor({ state: 'visible' });
-        await this.checkoutButton.click({ force: true });
+    async startCheckout() {
+        await this.initiateCheckoutBtn.waitFor({ state: 'visible' });
+        await this.initiateCheckoutBtn.click({ force: true });
     }
 
     /**
-     * Verify checkout page is visible
+     * Confirms the checkout review section is displayed
      */
-    async verifyCheckoutSection() {
-        await this.checkoutSection.waitFor({ state: 'visible' });
+    async confirmOrderReviewVisible() {
+        await this.orderReviewSection.waitFor({ state: 'visible' });
     }
 }
 
-module.exports = CatalogPage;
+module.exports = StorefrontManager;

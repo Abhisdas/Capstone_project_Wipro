@@ -1,31 +1,31 @@
 const { test, expect } = require('@playwright/test');
-const AuthPage = require('../../pages/auth.page');
+const AccountGateway = require('../../pages/auth.page');
 
-const credentialList = [
+const accountCredentials = [
     {
-        email: 'alex.dev.testing@gmail.com',
-        password: 'securePass123',
+        email: 'abhis.capstone.tester@gmail.com',
+        password: 'T3stAcc0unt!',
         expected: 'Logout'
     },
     {
-        email: 'bad.user.account@yahoo.com',
-        password: 'wrongpassword11',
+        email: 'random.fake.addr@hotmail.com',
+        password: 'n0tR3alPwd',
         expected: 'Your email or password is incorrect!'
     }
 ];
 
-test.describe('Verify Auth Login Functionality', () => {
-    credentialList.forEach(cred => {
-        test(`Authenticate user: ${cred.email}`, async ({ page }) => {
-            const authPage = new AuthPage(page);
-            await authPage.openApp();
-            await authPage.navigateToAuth();
-            await authPage.performLogin(cred.email, cred.password);
+test.describe('Parameterized Sign-In Outcome Verification', () => {
+    accountCredentials.forEach(account => {
+        test(`Sign-in attempt using: ${account.email}`, async ({ page }) => {
+            const gateway = new AccountGateway(page);
+            await gateway.launchHomePage();
+            await gateway.goToAuthPortal();
+            await gateway.executeSignIn(account.email, account.password);
 
-            if (cred.expected === 'Logout') {
-                await expect(authPage.logoutButton).toBeVisible();
+            if (account.expected === 'Logout') {
+                await expect(gateway.sessionEndLink).toBeVisible();
             } else {
-                await expect(authPage.loginErrorAlert).toContainText(cred.expected);
+                await expect(gateway.credentialMismatchAlert).toContainText(account.expected);
             }
         });
     });

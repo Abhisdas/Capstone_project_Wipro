@@ -1,12 +1,12 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Added Item Rendered Inside Cart Grid', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCatalog();
-    await catalogPage.addFirstProductToCart();
-    await catalogPage.resumeShopping();
-    await catalogPage.navigateToCart();
-    await expect(catalogPage.cartItemTitle.first()).toBeVisible();
+test('Verify Added Product Appears in Basket View', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openProductListing();
+    await storefront.placeTopItemInBasket();
+    await storefront.dismissConfirmationPopup();
+    await storefront.openBasketPage();
+    await expect(storefront.basketItemHeading).toBeVisible();
 });

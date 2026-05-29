@@ -1,14 +1,14 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
 test('Check Basket Added Item Quantity', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCatalog();
-    await catalogPage.addFirstProductToCart();
-    await catalogPage.resumeShopping();
-    await catalogPage.navigateToCart();
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openProductListing();
+    await storefront.placeTopItemInBasket();
+    await storefront.dismissConfirmationPopup();
+    await storefront.openBasketPage();
     await expect(
-        catalogPage.cartItemQuantity
+        storefront.basketItemCount
     ).toContainText('1');
 });

@@ -1,11 +1,11 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Check Success Dialog Dismisses via Continue Shopping', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCatalog();
-    await catalogPage.addFirstProductToCart();
-    await catalogPage.resumeShopping();
+test('Verify Confirmation Popup Closes After Keep Shopping Click', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openProductListing();
+    await storefront.placeTopItemInBasket();
+    await storefront.dismissConfirmationPopup();
     await expect(page.locator('#cartModal')).toBeHidden();
 });

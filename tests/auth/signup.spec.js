@@ -1,18 +1,18 @@
 const { test, expect } = require('@playwright/test');
-const AuthPage = require('../../pages/auth.page');
+const AccountGateway = require('../../pages/auth.page');
 const signupData = require('../../data/signup-data');
 
-signupData.forEach((data) => {
-    test(`Registration Validation for User: ${data.name || 'Empty Name'}`, async ({ page }) => {
-        const authPage = new AuthPage(page);
-        await authPage.openApp();
-        await authPage.navigateToAuth();
-        await authPage.performRegistration(data.name, data.email);
+signupData.forEach((candidate) => {
+    test(`Registration Attempt for: ${candidate.name || 'Blank Name'}`, async ({ page }) => {
+        const gateway = new AccountGateway(page);
+        await gateway.launchHomePage();
+        await gateway.goToAuthPortal();
+        await gateway.executeSignUp(candidate.name, candidate.email);
 
-        if (data.expected === "success") {
+        if (candidate.expected === "success") {
             await expect(page).toHaveURL(/signup/);
         } else {
-            await expect(authPage.registerButton).toBeVisible();
+            await expect(gateway.signupSubmitBtn).toBeVisible();
         }
     });
 });

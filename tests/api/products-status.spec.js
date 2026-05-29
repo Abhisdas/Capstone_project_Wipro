@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
-const apiClient = require('../../api/api-client');
+const httpService = require('../../api/api-client');
 
-test('Verify Products API Response Status Code', async () => {
-    const res = await apiClient.get('/productsList');
-    expect(res.status).toBe(200);
+test('Confirm Products API Returns Expected HTTP Code', async () => {
+    const result = await httpService.get('/productsList');
+    expect(result.status).toBe(200);
 });

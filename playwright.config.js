@@ -2,47 +2,46 @@
 const { defineConfig, devices } = require('@playwright/test');
 
 /**
+ * Playwright configuration for the E-Commerce QA Automation Suite.
+ * Targets chromium browser with failure diagnostics enabled.
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
   testDir: './tests',
 
-  /* Run tests in files in parallel */
+  /* Execute test files concurrently for faster feedback */
   fullyParallel: true,
 
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  /* Prevent accidental .only() usage in CI pipelines */
   forbidOnly: !!process.env.CI,
 
-  /* Retry on CI only */
+  /* Automatically retry failed tests in CI environments */
   retries: process.env.CI ? 2 : 0,
 
-  /* Run tests using single worker for stability */
+  /* Single worker ensures stable execution order */
   workers: 1,
 
-  /* Reporter to use */
+  /* Dual reporting: interactive HTML + Allure dashboards */
   reporter: [
     ['html'],
     ['allure-playwright']
   ],
 
-  /* Shared settings for all the projects below */
+  /* Global defaults applied to every test project */
   use: {
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
     video: 'retain-on-failure',
-    // We can set default navigation timeouts and launch options
     actionTimeout: 15000,
     navigationTimeout: 30000,
   },
 
-  /* Configure projects for major browsers */
+  /* Browser engine configuration */
   projects: [
     {
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
-        // automationexercise.com has intrusive ads that block elements.
-        // We can add simple ad-blocking/aborting for known ad hosts to make tests stable.
       },
     }
   ],

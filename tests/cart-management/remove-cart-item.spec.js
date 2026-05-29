@@ -1,13 +1,13 @@
 const { test, expect } = require('@playwright/test');
-const CatalogPage = require('../../pages/catalog.page');
+const StorefrontManager = require('../../pages/catalog.page');
 
-test('Delete Item Action from Shopping Cart', async ({ page }) => {
-    const catalogPage = new CatalogPage(page);
-    await catalogPage.openApp();
-    await catalogPage.navigateToCatalog();
-    await catalogPage.addFirstProductToCart();
-    await catalogPage.resumeShopping();
-    await catalogPage.navigateToCart();
-    await catalogPage.removeProductFromCart();
-    await expect(catalogPage.cartItemTitle).not.toBeVisible();
+test('Verify Item Disappears After Basket Removal Action', async ({ page }) => {
+    const storefront = new StorefrontManager(page);
+    await storefront.launchHomePage();
+    await storefront.openProductListing();
+    await storefront.placeTopItemInBasket();
+    await storefront.dismissConfirmationPopup();
+    await storefront.openBasketPage();
+    await storefront.discardBasketItem();
+    await expect(storefront.basketItemHeading).not.toBeVisible();
 });

@@ -1,18 +1,18 @@
 const { test, expect } = require('@playwright/test');
-const SupportPage = require('../../pages/support.page');
+const HelpDeskPortal = require('../../pages/support.page');
 
-test('Submit Contact/Support Ticket Form Check', async ({ page }) => {
-    const supportPage = new SupportPage(page);
-    await supportPage.openApp();
-    await supportPage.navigateToSupport();
-    await supportPage.populateSupportForm(
-        'Jane Miller',
-        'jane.qa.testing@gmail.com',
-        'Help Request',
-        'This is a query from automated test framework.'
+test('Complete Help Request Submission and Verify Success', async ({ page }) => {
+    const helpDesk = new HelpDeskPortal(page);
+    await helpDesk.launchHomePage();
+    await helpDesk.goToHelpDesk();
+    await helpDesk.fillHelpRequest(
+        'Abhishek Das',
+        'abhishek.das.signup@gmail.com',
+        'Inquiry from Automated Suite',
+        'This message was dispatched by the automated testing framework.'
     );
-    await supportPage.submitSupportForm();
+    await helpDesk.dispatchHelpRequest();
     await expect(
-        supportPage.alertSuccessBanner
+        helpDesk.confirmationBanner
     ).toContainText('Success');
 });
