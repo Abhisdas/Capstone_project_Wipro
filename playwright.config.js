@@ -3,7 +3,7 @@ const { defineConfig, devices } = require('@playwright/test');
 
 /**
  * Playwright configuration for the E-Commerce QA Automation Suite.
- * Targets chromium browser with failure diagnostics enabled.
+ * Runs against chromium, firefox, and webkit for full Allure suite coverage.
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
@@ -24,7 +24,11 @@ module.exports = defineConfig({
   /* Dual reporting: interactive HTML + Allure dashboards */
   reporter: [
     ['html'],
-    ['allure-playwright']
+    ['allure-playwright', {
+      detail: true,
+      outputFolder: 'allure-results',
+      suiteTitle: false,
+    }]
   ],
 
   /* Global defaults applied to every test project */
@@ -36,13 +40,25 @@ module.exports = defineConfig({
     navigationTimeout: 60000,
   },
 
-  /* Browser engine configuration */
+  /* Browser engine configuration - all 3 engines for full Allure suite coverage */
   projects: [
     {
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
       },
-    }
+    },
+    {
+      name: 'firefox',
+      use: { 
+        ...devices['Desktop Firefox'],
+      },
+    },
+    {
+      name: 'webkit',
+      use: { 
+        ...devices['Desktop Safari'],
+      },
+    },
   ],
 });

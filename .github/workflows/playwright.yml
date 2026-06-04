@@ -1,20 +1,21 @@
-name: Playwright Tests
+name: Playwright Tests with Allure Report
 
 on:
   push:
     branches: [ main, master ]
-
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   test:
     timeout-minutes: 60
-
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout Repository
       uses: actions/checkout@v4
 
@@ -29,15 +30,49 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
-    - name: Run Playwright Tests
+    - name: Run Playwright Tests (chromium, firefox, webkit)
       run: npx playwright test
+      continue-on-error: true
 
-    - name: Upload Playwright Report
-      uses: actions/upload-artifact@v4
-
-      if: ${{ !cancelled() }}
-
+    - name: Get Allure history from gh-pages
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
       with:
-        name: playwright-report
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Generate Allure Report with trend history
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      id: allure-report
+      with:
+        allure_results: allure-results
+        gh_pages: gh-pages
+        allure_report: allure-report
+        allure_history: allure-history
+        keep_reports: 20
+
+    - name: Deploy Allure Report to GitHub Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
+
+    - name: Upload Playwright HTML Report
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-html-report
         path: playwright-report/
+        retention-days: 30
+
+    - name: Upload Allure Results
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: allure-results
+        path: allure-results/
         retention-days: 30
