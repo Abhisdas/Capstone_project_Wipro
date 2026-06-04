@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   test:
@@ -60,6 +62,8 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
         publish_dir: allure-history
+        keep_files: false
+        enable_jekyll: false
 
     - name: Upload Playwright HTML Report
       uses: actions/upload-artifact@v4
