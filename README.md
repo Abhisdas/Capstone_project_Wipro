@@ -8,33 +8,35 @@ A full-stack automated testing solution for validating e-commerce web applicatio
 
 ## 🏆 Test Results
 
-### ✅ GitHub CI — Allure Report (192 Tests | 99.47% Pass Rate)
+### ✅ Local Run — Allure Report (125 Tests | 100% Pass Rate)
 
-> Live Report: **[https://abhisdas.github.io/Capstone_project_Wipro/](https://abhisdas.github.io/Capstone_project_Wipro/)**
-
-![Allure Dashboard — GitHub CI](https://raw.githubusercontent.com/Abhisdas/Capstone_project_Wipro/gh-pages/allure-report-ci.png)
-
-| Metric | Result |
-|--------|--------|
-| **Total Tests** | 192 |
-| **Passed** | 191 |
-| **Pass Rate** | 99.47% |
-| **Browsers** | Chromium + Firefox |
-| **Duration** | 3m 02s |
-| **Platform** | GitHub Actions (Ubuntu) |
-
----
-
-### ✅ Local Run — All Tests Passed (125 Tests | 100% Pass Rate)
+![Local Allure Report — 125 Tests 100% Pass](docs/screenshots/local-allure-100-percent.png)
 
 | Metric | Result |
 |--------|--------|
 | **Total Tests** | 125 |
 | **Passed** | 125 |
-| **Pass Rate** | 100% |
+| **Pass Rate** | 100% 🟢 |
 | **Browser** | Chromium |
-| **Duration** | 13.6 minutes |
-| **Platform** | Local Machine |
+| **Duration** | 13m 33s |
+| **Platform** | Local Machine (Windows) |
+
+---
+
+### ✅ GitHub CI — Allure Report (192 Tests | 99.47% Pass Rate)
+
+> 🌐 Live Report: **[https://abhisdas.github.io/Capstone_project_Wipro/](https://abhisdas.github.io/Capstone_project_Wipro/)**
+
+![GitHub CI Allure Report — 192 Tests 99.47% Pass](docs/screenshots/github-allure-99-percent.png)
+
+| Metric | Result |
+|--------|--------|
+| **Total Tests** | 192 |
+| **Passed** | 191 |
+| **Pass Rate** | 99.47% 🟢 |
+| **Browsers** | Chromium + Firefox |
+| **Duration** | 3m 02s |
+| **Platform** | GitHub Actions (Ubuntu) |
 
 ---
 
