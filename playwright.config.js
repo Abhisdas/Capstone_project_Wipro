@@ -15,11 +15,11 @@ module.exports = defineConfig({
   /* Prevent accidental .only() usage in CI pipelines */
   forbidOnly: !!process.env.CI,
 
-  /* Retry flaky tests once locally too (website is unreliable) */
-  retries: process.env.CI ? 2 : 1,
+  /* No retries in CI to speed things up */
+  retries: process.env.CI ? 0 : 1,
 
-  /* Single worker ensures stable execution order */
-  workers: 1,
+  /* Increase workers in CI for faster execution */
+  workers: process.env.CI ? 4 : 1,
 
   /* Dual reporting: interactive HTML + Allure dashboards */
   reporter: [
@@ -35,28 +35,28 @@ module.exports = defineConfig({
   use: {
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
-    video: 'retain-on-failure',
-    actionTimeout: 30000,
-    navigationTimeout: 60000,
+    video: 'off',
+    actionTimeout: 15000,
+    navigationTimeout: 30000,
   },
 
-  /* Browser engine configuration - all 3 engines for full Allure suite coverage */
+  /* Browser engine configuration */
   projects: [
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
       },
     },
     {
       name: 'firefox',
-      use: { 
+      use: {
         ...devices['Desktop Firefox'],
       },
     },
     {
       name: 'webkit',
-      use: { 
+      use: {
         ...devices['Desktop Safari'],
       },
     },
