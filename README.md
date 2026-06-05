@@ -9,8 +9,9 @@ A full-stack automated testing solution for validating e-commerce web applicatio
 ## 🏆 Test Results
 
 ### ✅ Local Run — Allure Report (125 Tests | 100% Pass Rate)
+<img width="1893" height="901" alt="local-allure-100-percent" src="https://github.com/user-attachments/assets/ac3883e2-9ee9-4502-b72c-b2ca1861aa8f" />
 
-![Local Allure Report — 125 Tests 100% Pass](docs/screenshots/local-allure-100-percent.png)
+
 
 | Metric | Result |
 |--------|--------|
@@ -27,7 +28,8 @@ A full-stack automated testing solution for validating e-commerce web applicatio
 
 > 🌐 Live Report: **[https://abhisdas.github.io/Capstone_project_Wipro/](https://abhisdas.github.io/Capstone_project_Wipro/)**
 
-![GitHub CI Allure Report — 192 Tests 99.47% Pass](docs/screenshots/github-allure-99-percent.png)
+<img width="1883" height="907" alt="github-allure-99-percent" src="https://github.com/user-attachments/assets/3d906f0b-92d1-4cda-bbbf-a356af376ca9" />
+
 
 | Metric | Result |
 |--------|--------|
