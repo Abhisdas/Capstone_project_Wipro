@@ -9,6 +9,10 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+  pull-requests: write
+  checks: write
 
 jobs:
   test:
@@ -34,6 +38,12 @@ jobs:
       run: npx playwright test
       continue-on-error: true
 
+    - name: Fix allure-results permissions
+      if: always()
+      run: |
+        mkdir -p allure-results
+        chmod -R 777 allure-results/
+
     - name: Get Allure history
       uses: actions/checkout@v4
       if: always()
@@ -43,7 +53,7 @@ jobs:
         path: gh-pages
 
     - name: Generate Allure Report
-      uses: simple-elf/allure-report-action@master
+      uses: step-security/allure-report-action@v1
       if: always()
       with:
         allure_results: allure-results
