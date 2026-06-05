@@ -15,8 +15,8 @@ module.exports = defineConfig({
   /* Prevent accidental .only() usage in CI pipelines */
   forbidOnly: !!process.env.CI,
 
-  /* No retries in CI to speed things up */
-  retries: process.env.CI ? 0 : 1,
+  /* 1 retry in CI to handle flaky network on live test site */
+  retries: process.env.CI ? 1 : 0,
 
   /* Increase workers in CI for faster execution */
   workers: process.env.CI ? 4 : 1,
@@ -36,8 +36,8 @@ module.exports = defineConfig({
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
     video: 'off',
-    actionTimeout: 15000,
-    navigationTimeout: 30000,
+    actionTimeout: 30000,
+    navigationTimeout: 60000,
   },
 
   /* Browser engine configuration */
