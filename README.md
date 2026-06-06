@@ -9,6 +9,8 @@ A full-stack automated testing solution for validating e-commerce web applicatio
 ## 🏆 Test Results
 
 ### ✅ GitHub CI — Allure Report (375 Tests | 100% Pass Rate)
+<img width="1907" height="894" alt="image" src="https://github.com/user-attachments/assets/5ef6eb2d-7b6c-43f1-9560-0bb89a7e9fae" />
+
 
 > 🌐 Live Report: **[https://abhisdas.github.io/Capstone_project_Wipro/](https://abhisdas.github.io/Capstone_project_Wipro/)**
 
