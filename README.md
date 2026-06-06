@@ -8,34 +8,18 @@ A full-stack automated testing solution for validating e-commerce web applicatio
 
 ## 🏆 Test Results
 
-### ✅ Local Run — Allure Report (125 Tests | 100% Pass Rate)
-
-![Local Allure Report — 125 Tests 100% Pass](https://github.com/user-attachments/assets/ac3883e2-9ee9-4502-b72c-b2ca1861aa8f)
-
-| Metric | Result |
-|--------|--------|
-| **Total Tests** | 125 |
-| **Passed** | 125 |
-| **Pass Rate** | 100% 🟢 |
-| **Browser** | Chromium |
-| **Duration** | 13m 33s |
-| **Platform** | Local Machine (Windows) |
-
----
-
-### ✅ GitHub CI — Allure Report (192 Tests | 99.47% Pass Rate)
-
-![GitHub CI Allure Report — 192 Tests 99.47% Pass](https://github.com/user-attachments/assets/3d906f0b-92d1-4cda-bbbf-a356af376ca9)
+### ✅ GitHub CI — Allure Report (375 Tests | 100% Pass Rate)
 
 > 🌐 Live Report: **[https://abhisdas.github.io/Capstone_project_Wipro/](https://abhisdas.github.io/Capstone_project_Wipro/)**
 
 | Metric | Result |
 |--------|--------|
-| **Total Tests** | 192 |
-| **Passed** | 191 |
-| **Pass Rate** | 99.47% 🟢 |
-| **Browsers** | Chromium + Firefox |
-| **Duration** | 3m 02s |
+| **Total Tests** | 375 |
+| **Passed** | 375 |
+| **Failed** | 0 |
+| **Pass Rate** | 100% 🟢 |
+| **Browsers** | Chromium + Firefox + WebKit |
+| **Duration** | 6m 12s |
 | **Platform** | GitHub Actions (Ubuntu) |
 
 ---
@@ -98,7 +82,7 @@ Every push to `main` automatically:
 │   ├── auth.page.js            # AccountGateway
 │   ├── catalog.page.js         # StorefrontManager
 │   └── support.page.js         # HelpDeskPortal
-├── tests/                      # Organized test suites (125+ tests)
+├── tests/                      # Organized test suites (375 tests across 3 browsers)
 │   ├── api/                    # REST API endpoint validation
 │   ├── auth/                   # Authentication & registration flows
 │   ├── cart-management/        # Shopping basket operations
@@ -180,15 +164,15 @@ npm run report:html
 
 ## 📋 Test Coverage
 
-| Module | Tests | Coverage |
-|--------|-------|----------|
-| Authentication | 15 | Login, logout, signup, validation |
-| Product Catalog | 22 | Search, browse, details, filters |
-| Cart Management | 16 | Add, remove, quantity, persistence |
-| Checkout Process | 16 | Navigation, flow, validation |
-| Customer Support | 14 | Form fields, submission |
-| Payment Validation | 5 | Page elements, navigation |
-| Shipping & Delivery | 10 | Page structure, links |
-| User Profile | 15 | Auth page, navigation |
-| REST API | 12 | Brands, products, status codes |
-| **Total** | **125+** | **Full E-Commerce flow** |
+| Module | Tests (per browser) | Total (×3 browsers) | Coverage |
+|--------|---------------------|---------------------|----------|
+| Authentication | 15 | 45 | Login, logout, signup, validation |
+| Product Catalog | 22 | 66 | Search, browse, details, filters |
+| Cart Management | 16 | 48 | Add, remove, quantity, persistence |
+| Checkout Process | 16 | 48 | Navigation, flow, validation |
+| Customer Support | 14 | 42 | Form fields, submission |
+| Payment Validation | 5 | 15 | Page elements, navigation |
+| Shipping & Delivery | 10 | 30 | Page structure, links |
+| User Profile | 15 | 45 | Auth page, navigation |
+| REST API | 12 | 36 | Brands, products, status codes |
+| **Total** | **125** | **375** | **Full E-Commerce flow — 100% Pass ✅** |
