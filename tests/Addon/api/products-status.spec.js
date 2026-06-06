@@ -1,5 +1,5 @@
-const { test, expect } = require('../../fixtures/base-fixture');
-const httpService = require('../../api/api-client');
+const { test, expect } = require('../../../fixtures/base-fixture');
+const httpService = require('../../../api/api-client');
 
 test('Confirm Products API Returns Expected HTTP Code', async () => {
     const result = await httpService.get('/productsList');

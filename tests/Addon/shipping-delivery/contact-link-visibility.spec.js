@@ -1,4 +1,4 @@
-const { test, expect } = require('../../fixtures/base-fixture');
+const { test, expect } = require('../../../fixtures/base-fixture');
 
 test('Check Contact Us Link Visibility in Delivery context', async ({ page }) => {
     await page.goto('https://automationexercise.com/view_cart', { waitUntil: 'commit' });
